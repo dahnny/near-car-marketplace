@@ -22,8 +22,8 @@ export function buyCar(carId: string): void {
   if (car == null) {
     throw new Error("car not found");
   }
-  if (car.owner != context.sender) {
-    throw new Error("You are not the owner");
+  if (!car.isSale) {
+    throw new Error("Car is not for sale");
   }
   if (car.price.toString() != context.attachedDeposit.toString()) {
     throw new Error("attached deposit should equal to the car's price");
