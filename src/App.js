@@ -30,6 +30,7 @@ function App() {
   const [rentedCars, setRentedCars] = useState([]);
   const account = window.walletConnection.account();
   const [balance, setBalance] = useState("0");
+  const [loading, setLoading] = useState(false);
   const getBalance = useCallback(async () => {
     if (account.accountId) {
       setBalance(await accountBalance());
@@ -50,15 +51,19 @@ function App() {
 
   // function to add cars to block
   const addtoCars = async (data) => {
+    setLoading(true);
     try {
       addCar(data).then((resp) => {
         getCars();
       });
     } catch (error) {
       console.log({ error });
+    } finally {
+      setLoading(false);
     }
   };
   const getCars = useCallback(async () => {
+    setLoading(true);
     try {
       const cars = await getCarsList();
       setCars(cars);
@@ -66,17 +71,22 @@ function App() {
       setRentedCars(cars.filter((car) => car.renter === account.accountId));
     } catch (error) {
       console.log({ error });
+    } finally {
+      setLoading(false);
     }
   }, [setCars, cars]);
 
   // function to initiate transaction
   const buy = async (price, id) => {
     console.log(price, id);
+    setLoading(true);
     try {
       await buyCar({ id, price });
       getCars();
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -92,10 +102,13 @@ function App() {
 
   // // function that is called to make a car available for sale
   const sell = async (id) => {
+    setLoading(true);
     try {
       await sellCar({ id });
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -109,28 +122,46 @@ function App() {
   };
 
   const redeem = async (id) => {
+    setLoading(true);
     try {
       await redeemCar({ id });
     } catch (error) {
       console.log(error);
     }
+    setLoading(false);
   };
 
   return (
     <div className="content">
-      <Header balance={balance} />
-      <Banner />
-      <SalesCars cars={cars} buyCar={buy} />
-      {/* <RentCars cars={  cars} rentCar={renting} /> */}
-      <AddCar addToCars={addtoCars} />
-      <MyCar
-        cars={myCars}
-        rentedCars={rentedCars}
-        sellCar={sell}
-        rentCar={rent}
-        redeemCar={redeem}
-      />
-      <Footer />
+      {loading ? (
+        <p
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            textAlign: "center",
+          }}
+        >
+          Loading...
+        </p>
+      ) : (
+        <>
+          <Header balance={balance} />
+          <Banner />
+          <SalesCars cars={cars} buyCar={buy} />
+          {/* <RentCars cars={  cars} rentCar={renting} /> */}
+          <AddCar addToCars={addtoCars} />
+          <MyCar
+            cars={myCars}
+            rentedCars={rentedCars}
+            sellCar={sell}
+            rentCar={rent}
+            redeemCar={redeem}
+          />
+          <Footer />
+        </>
+      )}
     </div>
   );
 }
