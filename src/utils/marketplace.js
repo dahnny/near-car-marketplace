@@ -4,6 +4,7 @@ import { parseNearAmount } from "near-api-js/lib/utils/format";
 const GAS = 100000000000000;
 
 export function addCar(car) {
+    console.log(car);
   car.id = uuid4();
   car.price = parseNearAmount(car.price + "");
   return window.contract.setCar({ car });

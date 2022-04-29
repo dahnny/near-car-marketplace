@@ -7,14 +7,14 @@ const MyCar = (props) => {
         <div className="row justify-content-center">
           <div className="col-lg-6">
             <div className="section-header text-center">
-              <h2 className="section-title">Bought/Rented Cars</h2>
+              <h2 className="section-title">My Cars</h2>
             </div>
           </div>
         </div>
         <div className="row">
           {props.cars.map((car) => (
             <MyCarItem
-              key={car.index}
+              key={car.id}
               car={car}
               sellCar={props.sellCar}
               rentCar={props.rentCar}

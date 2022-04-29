@@ -27,6 +27,7 @@ import MyCar from "./components/MyCar";
 function App() {
   const [cars, setCars] = useState([]);
   const [myCars, setMyCars] = useState([]);
+  const [rentedCars, setRentedCars] = useState([]);
   const account = window.walletConnection.account();
   const [balance, setBalance] = useState("0");
   const getBalance = useCallback(async () => {
@@ -62,6 +63,7 @@ function App() {
       const cars = await getCarsList();
       setCars(cars);
       setMyCars(cars.filter((car) => car.owner === account.accountId));
+      setRentedCars(cars.filter((car) => car.renter === account.accountId));
     } catch (error) {
       console.log({ error });
     }
@@ -78,7 +80,7 @@ function App() {
     }
   };
 
-    // function to initiate transaction
+  // function to initiate transaction
   const renting = async (price, id) => {
     try {
       await rentingCar({ id, price });
@@ -106,22 +108,28 @@ function App() {
     }
   };
 
-  const redeem = async(id) => {
+  const redeem = async (id) => {
     try {
-      await redeemCar({id});
+      await redeemCar({ id });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   return (
     <div className="content">
       <Header balance={balance} />
       <Banner />
       <SalesCars cars={cars} buyCar={buy} />
-      <RentCars cars={cars} rentCar={renting} />
+      {/* <RentCars cars={  cars} rentCar={renting} /> */}
       <AddCar addToCars={addtoCars} />
-      <MyCar cars={myCars} sellCar={sell} rentCar={rent} redeemCar = {redeem}/>
+      <MyCar
+        cars={myCars}
+        rentedCars={rentedCars}
+        sellCar={sell}
+        rentCar={rent}
+        redeemCar={redeem}
+      />
       <Footer />
     </div>
   );

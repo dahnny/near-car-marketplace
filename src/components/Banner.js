@@ -13,7 +13,7 @@ const Banner = (props) => {
                 oppurtunity to be a car owner
               </p>
               <a href="#0" className="cmn-btn">
-                Sell/Rent your car
+                Sell your car
               </a>
             </div>
           </div>

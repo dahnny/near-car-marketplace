@@ -5,7 +5,7 @@ const Header = (props) => {
         <div className="container">
           <nav className="navbar navbar-expand-lg p-0">
             <a className="site-logo site-title" href="index.html">
-              <h2>CeloDealer</h2>
+              <h2>NearDealer</h2>
             </a>
             <button
               className="navbar-toggler"

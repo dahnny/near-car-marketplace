@@ -39,23 +39,23 @@ const RentCars = (props) => {
             <div className="col-lg-6">
               <div className="block-area">
                 <div className="block-header">
-                  <h2 className="title">Welcome to CeloDealer </h2>
-                  <p>We deal with all kinds of cars on the celo blockchain</p>
+                  <h2 className="title">Welcome to NearDealer </h2>
+                  <p>
+                    We deal with all kinds of cars on the near blockchain. N.B
+                    You only own the cars you buy. Cars you rent can be redeemed
+                    by the owner at any time
+                  </p>
                 </div>
                 <div className="block-body">
                   <ul className="num-list">
                     <li>
-                      <span className="num">01</span>Download CeloWallet
-                      Extension
+                      <span className="num">01</span>Setup your Wallet
                     </li>
                     <li>
-                      <span className="num">02</span>Setup your Wallet
+                      <span className="num">02</span>Choose a car
                     </li>
                     <li>
-                      <span className="num">03</span>Choose a car
-                    </li>
-                    <li>
-                      <span className="num">04</span>Buy/Rent your car
+                      <span className="num">03</span>Buy/Rent your car
                     </li>
                   </ul>
                 </div>

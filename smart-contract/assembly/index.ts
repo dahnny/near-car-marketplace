@@ -48,6 +48,7 @@ export function rentingCar(carId: string): void {
     throw new Error("attached deposit should equal to the car's price");
   }
   ContractPromiseBatch.create(car.owner).transfer(context.attachedDeposit);
+  car.renter = context.sender;
   car.isSale = false;
   car.isRent = false;
   car.isRented = true;
@@ -92,6 +93,7 @@ export function redeemCar(carId:string):void{
   if (car.owner != context.sender) {
     throw new Error("You are not the owner");
   } 
+  car.renter = "";
   car.isRent = false;
   car.isSale = false;
   car.isRented = false;

@@ -7,7 +7,7 @@ const AddCar = (props) => {
   const [isUsed, setIsUsed] = useState("false");
   const [description, setDescription] = useState("");
   const [isRent, setForRent] = useState(false);
-  const [isSale, setForSale] = useState(false);
+  const [isSale, setForSale] = useState(true);
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -71,18 +71,6 @@ const AddCar = (props) => {
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
                 />
-              </div>
-              <div className="col-lg-6 form-group">
-                <select
-                  onChange={(e) => {
-                    setForRent(convertToBool(e.target.value));
-                    setForSale(!convertToBool(e.target.value));
-                  }}
-                >
-                  <option>For Rent</option>
-                  <option value="true">True</option>
-                  <option value="false">False</option>
-                </select>
               </div>
               <div className="col-lg-6 form-group">
                 <select

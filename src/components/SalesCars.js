@@ -30,7 +30,7 @@ const SalesCars = props => {
                         <div className="col-lg-6">
                             <div className="section-header text-center">
                                 <h2 className="section-title">our awesome features</h2>
-                                <p>These is what makes us at CeloDealer special</p>
+                                <p>These is what makes us at NearDealer special</p>
                             </div>
                         </div>
                     </div>

@@ -8,6 +8,7 @@ export class Car {
   image: string;
   price: u128;
   owner: string;
+  renter:string;
   isUsed: bool;
   isRent: bool;
   isSale: bool;
@@ -21,6 +22,7 @@ export class Car {
     car.image = payload.image;
     car.price = payload.price;
     car.owner = context.sender;
+    car.renter= "";
     car.isUsed = payload.isUsed;
     car.isRent = payload.isRent;
     car.isSale = payload.isSale;

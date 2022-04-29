@@ -17,19 +17,9 @@ const MyCarItem = (props) => {
               >
                 Sell Car
               </a>
-              <a
-                onClick={() => props.rentCar(props.car.id)}
-                className="cmn-btn"
-              >
-                Rent your Car
-              </a>
             </div>
-          ) : props.car.isRented === true ? (
-            <a onClick={() => props.redeemCar(props.car.id)} className="cmn-btn">
-              Redeem your Car
-            </a>
           ) : (
-            <p>This car is in the market. Someone has to buy/rent it</p>
+            <p>This car is in the market. Someone has to buy it</p>
           )}
         </div>
         <div className="car-item-meta">
