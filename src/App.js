@@ -105,6 +105,7 @@ function App() {
     setLoading(true);
     try {
       await sellCar({ id });
+      getCars();
     } catch (error) {
       console.log(error);
     } finally {
@@ -125,6 +126,7 @@ function App() {
     setLoading(true);
     try {
       await redeemCar({ id });
+      getCars();
     } catch (error) {
       console.log(error);
     }
