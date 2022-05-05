@@ -4,6 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "asb --target debug",
+    "build:release": "asb",
+    "asp": "asp --verbose --nologo",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

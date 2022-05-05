@@ -1,16 +1,23 @@
 import { Car, listedCars } from "./model";
-import { ContractPromiseBatch, context } from "near-sdk-as";
+import { ContractPromiseBatch, context, u128 } from "near-sdk-as";
 
 export function setCar(car: Car): void {
   let storedCar = listedCars.get(car.id);
   if (storedCar !== null) {
     throw new Error(`car with ${car.id} already exists`);
   }
+  if (car.price <= u128.from(0)) {
+    throw new Error(`please specify car price`);
+  }
   listedCars.set(car.id, Car.fromPayload(car));
 }
 
-export function getCar(id: string): Car | null {
-  return listedCars.get(id);
+export function getCar(id: string): Car {
+  let car = listedCars.get(id);
+  if (car == null) {
+    throw new Error("car not found");
+  }
+  return car;
 }
 
 export function getCars(): Car[] {
@@ -19,13 +26,10 @@ export function getCars(): Car[] {
 
 export function buyCar(carId: string): void {
   const car = getCar(carId);
-  if (car == null) {
-    throw new Error("car not found");
-  }
   if (!car.isSale) {
     throw new Error("Car is not for sale");
   }
-  if (car.price.toString() != context.attachedDeposit.toString()) {
+  if (car.price != context.attachedDeposit) {
     throw new Error("attached deposit should equal to the car's price");
   }
   ContractPromiseBatch.create(car.owner).transfer(context.attachedDeposit);
@@ -38,13 +42,10 @@ export function buyCar(carId: string): void {
 
 export function rentingCar(carId: string): void {
   const car = getCar(carId);
-  if (car == null) {
-    throw new Error("car not found");
-  }
   if (!car.isRent) {
     throw new Error("Car is not for rent");
   }
-  if (car.price.toString() != context.attachedDeposit.toString()) {
+  if (car.price != context.attachedDeposit) {
     throw new Error("attached deposit should equal to the car's price");
   }
   ContractPromiseBatch.create(car.owner).transfer(context.attachedDeposit);
@@ -57,9 +58,6 @@ export function rentingCar(carId: string): void {
 
 export function sellCar(carId: string): void {
   const car = getCar(carId);
-  if (car == null) {
-    throw new Error("car not found");
-  }
   if (car.owner != context.sender) {
     throw new Error("You are not the owner");
   }
@@ -72,9 +70,6 @@ export function sellCar(carId: string): void {
 
 export function rentCar(carId: string): void {
   const car = getCar(carId);
-  if (car == null) {
-    throw new Error("car not found");
-  }
   if (car.owner != context.sender) {
     throw new Error("You are not the owner");
   }
@@ -85,14 +80,11 @@ export function rentCar(carId: string): void {
 
 }
 
-export function redeemCar(carId:string):void{
-    const car = getCar(carId);
-  if (car == null) {
-    throw new Error("car not found");
-  }
+export function redeemCar(carId: string): void {
+  const car = getCar(carId);
   if (car.owner != context.sender) {
     throw new Error("You are not the owner");
-  } 
+  }
   car.renter = "";
   car.isRent = false;
   car.isSale = false;

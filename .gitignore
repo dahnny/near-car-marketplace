@@ -4,6 +4,10 @@
 /node_modules
 /.pnp
 .pnp.js
+smart-contract/node_modules/
+yarn.lock
+
+.idea/
 
 # testing
 /coverage
